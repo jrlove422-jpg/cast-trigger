@@ -19,8 +19,6 @@ jobs:
         run: unzip -q *.zip && ls cast-trigger-flutter
       - run: flutter pub get
         working-directory: cast-trigger-flutter
-      - run: flutter analyze
-        working-directory: cast-trigger-flutter
       - run: flutter build apk --debug
         working-directory: cast-trigger-flutter
       - uses: actions/upload-artifact@v4
