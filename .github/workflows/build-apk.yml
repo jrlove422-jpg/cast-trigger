@@ -17,6 +17,12 @@ jobs:
           channel: stable
       - name: Unzip project
         run: unzip -q *.zip && ls cast-trigger-flutter
+      - name: Generate Android scaffold
+        run: |
+          cp pubspec.yaml /tmp/pubspec.yaml.bak
+          flutter create --platforms=android --project-name cast_trigger --org com.casttrigger .
+          cp /tmp/pubspec.yaml.bak pubspec.yaml
+        working-directory: cast-trigger-flutter
       - run: flutter pub get
         working-directory: cast-trigger-flutter
       - run: flutter build apk --debug
