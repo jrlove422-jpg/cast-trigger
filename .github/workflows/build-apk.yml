@@ -15,10 +15,15 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+      - name: Unzip project
+        run: unzip -q *.zip && ls cast-trigger-flutter
       - run: flutter pub get
+        working-directory: cast-trigger-flutter
       - run: flutter analyze
+        working-directory: cast-trigger-flutter
       - run: flutter build apk --debug
+        working-directory: cast-trigger-flutter
       - uses: actions/upload-artifact@v4
         with:
           name: cast-trigger-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          path: cast-trigger-flutter/build/app/outputs/flutter-apk/app-debug.apk
