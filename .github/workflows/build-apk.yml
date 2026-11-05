@@ -1,3 +1,4 @@
+
 name: Build Android APK
 on:
   push:
@@ -24,6 +25,9 @@ jobs:
           cp /tmp/pubspec.yaml.bak pubspec.yaml
         working-directory: cast-trigger-flutter
       - run: flutter pub get
+        working-directory: cast-trigger-flutter
+      - name: Generate launcher icon from logo artwork
+        run: dart run flutter_launcher_icons
         working-directory: cast-trigger-flutter
       - run: flutter build apk --debug
         working-directory: cast-trigger-flutter
