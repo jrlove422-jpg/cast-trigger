@@ -1,4 +1,3 @@
-
 name: Build Android APK
 on:
   push:
@@ -23,6 +22,12 @@ jobs:
           cp pubspec.yaml /tmp/pubspec.yaml.bak
           flutter create --platforms=android --project-name cast_trigger --org com.casttrigger .
           cp /tmp/pubspec.yaml.bak pubspec.yaml
+        working-directory: cast-trigger-flutter
+      - name: Bump Android compileSdk to 36
+        run: |
+          if [ -f android/app/build.gradle.kts ]; then sed -i 's/compileSdk = .*/compileSdk = 36/' android/app/build.gradle.kts; fi
+          if [ -f android/app/build.gradle ]; then sed -i 's/compileSdkVersion .*/compileSdkVersion 36/' android/app/build.gradle; fi
+          grep -n "compileSdk" android/app/build.gradle* || true
         working-directory: cast-trigger-flutter
       - run: flutter pub get
         working-directory: cast-trigger-flutter
