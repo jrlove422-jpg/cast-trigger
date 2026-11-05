@@ -34,6 +34,13 @@ jobs:
           "
           grep -n "android:label" android/app/src/main/AndroidManifest.xml
         working-directory: cast-trigger-flutter
+      - name: Fix MainActivity for local_auth biometrics
+        run: |
+          f=$(find android/app/src/main -name 'MainActivity.*' | head -n 1)
+          echo "MainActivity: $f"
+          sed -i 's/FlutterActivity/FlutterFragmentActivity/g' "$f"
+          grep -n "FlutterFragmentActivity" "$f"
+        working-directory: cast-trigger-flutter
       - name: Bump Android compileSdk to 36
         run: |
           if [ -f android/app/build.gradle.kts ]; then sed -i 's/compileSdk = .*/compileSdk = 36/' android/app/build.gradle.kts; fi
